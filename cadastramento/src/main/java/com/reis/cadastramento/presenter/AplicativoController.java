@@ -1,7 +1,9 @@
 package com.reis.cadastramento.presenter;
 
 import com.reis.cadastramento.core.model.Aplicativo;
+import com.reis.cadastramento.core.model.Assinatura;
 import com.reis.cadastramento.core.services.AplicativoService;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +23,10 @@ public class AplicativoController {
         return as.getAllAplicativo();
     }
 
-    @PatchMapping("/servcad/aplicativos/:idAplicativo")
+    @PatchMapping("/servcad/aplicativos/{cod}")
     public Optional<Aplicativo> updateAplicativo(@PathVariable Long cod, @RequestBody Float custo){
         return as.updateCusto(cod, custo);
     }
+
+
 }

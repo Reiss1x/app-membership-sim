@@ -2,6 +2,7 @@ package com.reis.cadastramento.core.services;
 
 import com.reis.cadastramento.core.model.Aplicativo;
 import com.reis.cadastramento.core.model.AplicativoRepo;
+import com.reis.cadastramento.core.model.Assinatura;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,6 @@ public class AplicativoService {
         }
         return Optional.empty();
     }
+
 
 }
