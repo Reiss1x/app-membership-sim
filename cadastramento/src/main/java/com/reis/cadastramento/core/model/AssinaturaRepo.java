@@ -8,6 +8,5 @@ import java.util.List;
 public interface AssinaturaRepo extends CrudRepository<Assinatura, Long> {
     List<Assinatura> findAllByCodCli(Long codCli);
     List<Assinatura> findAllByCodApp(Long codApp);
-
-
+    Assinatura findByCod(Long cod);
 }

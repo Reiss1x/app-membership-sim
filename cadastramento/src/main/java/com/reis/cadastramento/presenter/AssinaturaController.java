@@ -19,7 +19,7 @@ public class AssinaturaController {
 
     @PostMapping("/servcad/assinaturas")
     @ResponseStatus(HttpStatus.CREATED)
-    public Assinatura createAssinatura(@RequestBody AssinaturaRequest assRequest){
+    public Assinatura cadastrarAssinatura(@RequestBody AssinaturaRequest assRequest){
         return as.createAssinatura(assRequest);
     }
 
@@ -33,9 +33,13 @@ public class AssinaturaController {
         return as.getAssinaturaByCliente(codCli);
 
     }
-
     @GetMapping("/servcad/assapp/{codApp}")
     public List<AssinaturaResponse> getAssinaturaByApp(@PathVariable Long codApp){
         return as.getAssinaturaByApp(codApp);
+    }
+
+    @GetMapping("servcad/asscod/{cod}")
+    public AssinaturaResponse getAssinaturaByCod(@PathVariable Long cod){
+        return as.getAssByCod(cod);
     }
 }

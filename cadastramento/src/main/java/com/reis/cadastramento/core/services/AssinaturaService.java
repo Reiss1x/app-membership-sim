@@ -1,7 +1,9 @@
 package com.reis.cadastramento.core.services;
 
+import com.reis.cadastramento.core.model.Aplicativo;
 import com.reis.cadastramento.core.model.Assinatura;
 import com.reis.cadastramento.core.model.AssinaturaRepo;
+import com.reis.cadastramento.core.model.PagamentoDTO;
 import com.reis.cadastramento.core.model.requestnresponse.AssinaturaRequest;
 import com.reis.cadastramento.core.model.requestnresponse.AssinaturaResponse;
 import com.reis.cadastramento.core.services.mapper.AssinaturaMapper;
@@ -23,6 +25,9 @@ public class AssinaturaService {
     @Autowired
     private AssinaturaMapper assMapper;
 
+    @Autowired
+    private AplicativoService apps;
+
     public Assinatura createAssinatura(AssinaturaRequest assRequest){
         Assinatura assinatura = new Assinatura();
         assinatura.setCodCli(assRequest.codCli());
@@ -30,6 +35,15 @@ public class AssinaturaService {
         assinatura.setInicioVigencia(LocalDate.now());
         assinatura.setFimVigencia(LocalDate.now().plusDays(7));
         return repo.save(assinatura);
+    }
+
+    public AssinaturaResponse getAssByCod(Long cod){
+        LocalDate hoje = LocalDate.now();
+        Assinatura ass = repo.findByCod(cod);
+        AssinaturaResponse assresponse = assMapper.map(new AssinaturaResponse(), ass);
+        if(ass.getFimVigencia().isAfter(hoje)) { assresponse.setStatus("ATIVA"); } else {assresponse.setStatus("CANCELADA");}
+        return assresponse;
+
     }
 
     public List<AssinaturaResponse> getAssByType(String tipo) {
@@ -49,16 +63,24 @@ public class AssinaturaService {
                 List<Assinatura> ativas = assinaturas.stream().filter(assinatura1 -> assinatura1.getFimVigencia().isAfter(hoje)).toList();
                 for (Assinatura ass : ativas) {
                     AssinaturaResponse assResponse = assMapper.map(new AssinaturaResponse(), ass);
-                    assResponse.setStatus("ATIVA");
-                    response.add(assResponse);
+                    if(ass.getFimVigencia().isAfter(hoje)) {
+                        assResponse.setStatus("ATIVA");
+                        response.add(assResponse);
+                    }
                 }
                 return response;
             case "CANCELADAS":
                 for (Assinatura ass : assinaturas) {
                     AssinaturaResponse assResponse = assMapper.map(new AssinaturaResponse(), ass);
-                    assResponse.setStatus("CANCELADA");
-                    response.add(assResponse);
+                    if(ass.getFimVigencia().isAfter(hoje)) {
+
+                    }
+                    else {
+                        assResponse.setStatus("CANCELADA");
+                        response.add(assResponse);
+                    }
                 }
+                return response;
         }
         return null;
     }
@@ -70,6 +92,18 @@ public class AssinaturaService {
         } else {
             return ResponseEntity.noContent().build();
         }
+    }
+
+    public void setAssinaturaByCod(PagamentoDTO pagamento){
+        Long codAss = pagamento.getCodAssinatura();
+        System.out.println(codAss);
+        Assinatura assinatura = repo.findByCod(codAss);
+        Aplicativo app = apps.getAplicativo(assinatura.getCodApp());
+        if (pagamento.getValorPago() >= app.getCustoMensal()){
+
+            assinatura.setFimVigencia(pagamento.getData().plusDays(30));
+        }
+        repo.save(assinatura);
     }
 
 
