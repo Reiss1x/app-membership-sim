@@ -28,7 +28,7 @@ public class AplicativoController {
         return as.updateCusto(cod, custo);
     }
 
-    @PostMapping("servcad/aplicativos/")
+    @PostMapping("servcad/aplicativos/new")
     public Aplicativo postAplicativo(@RequestBody Aplicativo aplicativo){
         return as.createAplicativo(aplicativo);
     }

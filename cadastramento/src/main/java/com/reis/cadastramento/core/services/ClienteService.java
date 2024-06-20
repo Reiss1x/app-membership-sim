@@ -25,7 +25,7 @@ public class ClienteService {
     }
 
     public Cliente updateCliente(Cliente cliente){
-        Optional<Cliente> tempClient = repo.findById(cliente.getCod());
+        Optional<Cliente> tempClient = repo.findByCod(cliente.getCod());
         if(tempClient.isPresent()){
             Cliente client = tempClient.get();
             client.setNome(cliente.getNome());
