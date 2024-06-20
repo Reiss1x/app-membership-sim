@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
         <module name="name-server" />
+        <module name="assinaturas-validas" />
         <module name="cadastramento" />
         <module name="pagamentos" />
         <module name="cadastro-geral" />
@@ -18,6 +19,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateway" options="-parameters" />
+      <module name="assinaturas-validas" options="-parameters" />
       <module name="cadastramento" options="-parameters" />
       <module name="cadastro-geral" options="-parameters" />
       <module name="name-server" options="-parameters" />
