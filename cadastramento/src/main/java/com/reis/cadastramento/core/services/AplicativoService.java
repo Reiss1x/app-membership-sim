@@ -20,6 +20,14 @@ public class AplicativoService {
         return (List<Aplicativo>) repo.findAll();
     }
 
+    public Aplicativo getAplicativo(Long id) {
+        Optional<Aplicativo> app = repo.findById(id);
+        if (app.isPresent()){
+            return app.get();
+        }
+        return null;
+    }
+
     public Optional<Aplicativo> updateCusto(Long cod, Float custo){
         Optional<Aplicativo> tempApp = repo.findById(cod);
 
@@ -32,5 +40,7 @@ public class AplicativoService {
         return Optional.empty();
     }
 
-
+    public Aplicativo createAplicativo(Aplicativo aplicativo){
+        return repo.save(aplicativo);
+    }
 }
