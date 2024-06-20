@@ -13,8 +13,6 @@ public class PagamentoController {
     @Autowired
     private PagamentoService ps;
 
-
-
     @PostMapping("/registrarpagamento")
     public void registerPagamento(@RequestBody Pagamento pagamento){
         ps.registerPagamento(pagamento);
