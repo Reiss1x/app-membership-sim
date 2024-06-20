@@ -14,7 +14,8 @@ public class PagamentoController {
     private PagamentoService ps;
 
     @PostMapping("/registrarpagamento")
-    public void registerPagamento(@RequestBody Pagamento pagamento){
-        ps.registerPagamento(pagamento);
+    public Pagamento registerPagamento(@RequestBody Pagamento pagamento){
+        return ps.registerPagamento(pagamento);
+
     }
 }

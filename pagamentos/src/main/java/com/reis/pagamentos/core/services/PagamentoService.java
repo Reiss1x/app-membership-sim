@@ -25,7 +25,7 @@ public class PagamentoService {
     @Autowired
     private FanoutExchange fanout;
 
-    public void registerPagamento(Pagamento pagamento){
+    public Pagamento registerPagamento(Pagamento pagamento){
         repo.save(pagamento);
         PagamentoDTO pagamentodto = new PagamentoDTO();
         pagamentodto.setCodAssinatura(pagamento.getCodAssinatura());
@@ -33,5 +33,6 @@ public class PagamentoService {
         pagamentodto.setValorPago(pagamento.getValorPago());
         rabbitTemplate.convertAndSend(fanout.getName(), "",pagamentodto);
         logger.info("Message sent to exchange: {}, with routingKey: {}", pagamentodto, "");
+        return pagamento;
     }
 }
