@@ -30,6 +30,7 @@ public class ClienteService {
             Cliente client = tempClient.get();
             client.setNome(cliente.getNome());
             client.setEmail(cliente.getEmail());
+            repo.save(client);
             return client;
         }
         return null;
