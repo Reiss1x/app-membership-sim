@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
     public static final String FANOUTEXCHANGENAME =
-            "conversions.v1.conversion-request";
+            "pagamentos.pagamento-request";
     @Bean
     public FanoutExchange fanoutExchange() {
         return new FanoutExchange(FANOUTEXCHANGENAME);
